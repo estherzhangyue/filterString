@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Shuyi Wang">
-  <title>My Beautiful Slide</title>
+  <title>Filter String</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -34,38 +34,72 @@
     <div class="slides">
 
 <section id="title-slide">
-  <h1 class="title">My Beautiful Slide</h1>
-  <p class="author">Shuyi Wang</p>
-  <p class="date">Aug 2019</p>
+  <h1 class="title">Filter String</h1>
+  <p class="author">Esther Zhang</p>
+  <p class="date">Oct 2021</p>
 </section>
 
-<section><section id="introduction" class="title-slide slide level1"><h1>Introduction</h1></section><section id="welcome" class="slide level2">
-<h2>Welcome</h2>
+<section><section id="introduction" class="slide level2">
+	<h2>Demands</h2>
+	<p> Strip out the Spaces and symbols first, and then turn all lowercase to see if it is "yeezy"</p>
+</section><section id="welcome" class="slide level2">
+<h2>FOCUS</h2>
+<p> Strip out the Spaces and symbols </p>
 <ul>
-<li class="fragment">item 1</li>
-<li class="fragment">item 2</li>
+<li class="fragment">remove all spaces</li>
+<li class="fragment">filter text to pure english string</li>
 </ul>
-</section><section id="local-image" class="slide level2">
-<h2>local image</h2>
-</section><section id="section" class="slide level2" data-background-image="assets/2019-01-17-10-20-12-756041.png" data-background-size="contain">
-<h2></h2>
-</section><section id="inline-image" class="slide level2">
-<h2>inline image</h2>
-<ul>
-<li class="fragment">text</li>
-<li class="fragment"><img src="assets/2019-01-17-10-20-12-756041.png" style="border-style: none" alt=""></li>
-</ul>
-</section><section id="web-image" class="slide level2">
-<h2>web image</h2>
-</section><section id="section-1" class="slide level2" data-background-image="assets/2019-08-12-18-46-06-105531.jpg" data-background-size="contain">
-<h2></h2>
-</section><section id="video" class="slide level2">
-<h2>video</h2>
-</section><section id="section-2" class="slide level2">
-<h2></h2>
-<video class="stretch" src="assets/markdown2slides-intro.mp4" data-autoplay controls>
-</video>
-</section><section id="the-end" class="slide level2">
+</section><section id="remove spaces" class="slide level2">
+<h2>remove All Sapce</h2>
+<pre>
+	func replacingOccurrences(of target: String, 
+	                   with replacement: String, 
+                                    options: NSString.CompareOptions = [], 
+                          range searchRange: NSRange) -> String
+</pre>
+<div style="padding:20px; font-size: 16px;">
+  <p><b>.literal</b>         : compare every character<br>
+     <b>.caseInsensitive</b> : match letters in the pattern independent of case</p>
+</div>
+</section>
+<section id="filter character" class="slide level2">
+<h2>filter text to pure english string</h2>
+<p>1. set regex</p>
+<pre>
+	init(pattern: String, 
+	     options: NSRegularExpression.Options = [])
+</pre>
+<div style="padding:20px; font-size: 16px;">
+  <p><b>pattern</b>         : The regular expression pattern to compile<br></p>
+</div>
+<pre>
+let regexStr = "[^a-zA-Z]"
+let regex = try? NSRegularExpression.init(pattern: regexStr, options: .caseInsensitive)
+</pre>
+</section>
+<section id="filter character" class="slide level2">
+<p>2. use regex</p>
+<pre>
+	func stringByReplacingMatches(in string: String, 
+                      options: NSRegularExpression.MatchingOptions = [], 
+                        range: NSRange, 
+                 withTemplate templ: String) -> String
+</pre>
+<div style="padding:20px; font-size: 16px;">
+  <p><b>string</b>         : The string to search for values within.<br>
+  	 <b>options</b>        : The matching options to use.<br>
+  	 <b>range</b>          : The range of the string to search<br>
+  	  <b>template</b>      : The substitution template used when replacing matching instances<br>
+  </p>
+</div>
+<pre>
+regex?.stringByReplacingMatches(in: self, 
+                           options: [], 
+                             range: NSRange(location: 0, length: self.count), 
+                      withTemplate: "")
+</pre>
+</section>
+<section id="the-end" class="slide level2">
 <h2>The End</h2>
 <p>Thanks for your time!</p>
 </section></section>
